@@ -62,7 +62,7 @@ class User extends Authenticatable implements FilamentUser
             return $this->role === 'admin';
         }
 
-        if ($panelId === 'user') {
+        if ($panelId === 'app') {
             return in_array($this->role, ['user', 'admin'], true);
         }
 
