@@ -108,7 +108,7 @@ jobs:
           command_timeout: 30m
           script: |
             set -e
-            cd /var/www/au-srms-remastered
+            cd /var/www/srms
             git pull --ff-only origin main
             composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
             php artisan migrate --force
