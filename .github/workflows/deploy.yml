@@ -111,7 +111,8 @@ jobs:
             cd /var/www/srms
             git config --global --add safe.directory /var/www/srms
             sudo chown -R "$(whoami)":"$(whoami)" /var/www/srms
-            git pull --ff-only origin main
+            git fetch --prune origin
+            git reset --hard origin/main
             composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
             php artisan migrate --force
             php artisan optimize:clear
