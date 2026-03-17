@@ -109,6 +109,7 @@ jobs:
           script: |
             set -e
             cd /var/www/srms
+            git config --global --add safe.directory /var/www/srms
             git pull --ff-only origin main
             composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
             php artisan migrate --force
