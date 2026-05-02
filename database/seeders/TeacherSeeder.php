@@ -75,7 +75,19 @@ class TeacherSeeder extends Seeder
             // Generate email
             $email = Str::lower($firstName . '.' . Str::replace(' ', '', $lastName) . $i . '@au.edu.ph');
 
+            // Generate password (last name + birth year)
+            $password = Str::lower(Str::replace(' ', '', $lastName)) . $dateOfBirthCarbon->format('Y');
+
+            // Create user
+            $user = User::create([
+                'name' => $firstName . ' ' . $lastName,
+                'email' => $email,
+                'password' => Hash::make($password),
+                'role' => 'teacher',
+            ]);
+
             Teacher::create([
+                'user_id'                        => $user->id,
                 'employee_id'                   => $employeeId,
                 'campus'                        => $campus,
                 'department'                    => fake()->randomElement($departments),
