@@ -35,6 +35,11 @@ class TeacherSectionsResource extends Resource
             ->whereHas('teachers', fn (Builder $q) => $q->where('teachers.id', $teacher?->id));
     }
 
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && auth()->user()->role === 'teacher';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema->components([]);
@@ -51,12 +56,18 @@ class TeacherSectionsResource extends Resource
                 Tables\Columns\TextColumn::make('campus'),
                 Tables\Columns\TextColumn::make('program'),
                 Tables\Columns\TextColumn::make('year_level')->label('Year Level'),
-                Tables\Columns\TextColumn::make('term'),
+                Tables\Columns\TextColumn::make('term')->label('Semester'),
                 Tables\Columns\TextColumn::make('school_year')->label('School Year'),
                 Tables\Columns\TextColumn::make('students_count')
                     ->label('Students')
                     ->counts('students'),
             ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('term')
+                    ->label('Semester')
+                    ->options(Section::query()->distinct()->pluck('term', 'term')->toArray()),
+            ])
+            ->defaultSort('term')
             ->recordAction(null)
             ->recordActions([
                 Action::make('view_students')
