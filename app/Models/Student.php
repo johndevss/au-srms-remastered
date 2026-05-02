@@ -80,4 +80,8 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function sections()
+    {
+        return $this->belongsToMany(Section::class, 'section_student');
+    }
 }

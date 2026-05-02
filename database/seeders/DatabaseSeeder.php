@@ -22,10 +22,11 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        // Seed students
+        // Seed students, teachers, and sections
         $this->call([
             StudentSeeder::class,
             TeacherSeeder::class,
+            SectionSeeder::class,
         ]);
     }
 }
