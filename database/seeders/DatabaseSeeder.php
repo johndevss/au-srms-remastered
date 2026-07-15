@@ -15,11 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Create admin user for Filament
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin User',
+            'email' => 'admin@au.edu.ph',
+            'role' => 'admin',
+        ]);
+
+        // Seed students, teachers, and sections
+        $this->call([
+            StudentSeeder::class,
+            TeacherSeeder::class,
+            SectionSeeder::class,
         ]);
     }
 }
